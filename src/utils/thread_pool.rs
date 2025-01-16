@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 use std::{
     sync::{
         mpsc::{self, Receiver, Sender},
@@ -11,11 +12,10 @@ pub struct ThreadPool {
     pub sender: Sender<Job>,
 }
 
-struct Worker {
+pub struct Worker {
     pub id: usize,
     pub thread: Option<JoinHandle<()>>,
 }
-
 
 impl ThreadPool {
     pub fn new(size: usize) -> ThreadPool {
@@ -23,7 +23,7 @@ impl ThreadPool {
         let receiver = Arc::new(Mutex::new(reviver));
         let mut workers = Vec::with_capacity(size);
 
-        for id in 1..size {
+        for id in 1..=size {
             workers.push(Worker::new(id, receiver.clone()));
         }
 
@@ -43,7 +43,7 @@ impl ThreadPool {
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
 impl Worker {
-    fn new(id: usize, receiver: Arc<Mutex<Receiver<Job>>>) -> Worker {
+    pub fn new(id: usize, receiver: Arc<Mutex<Receiver<Job>>>) -> Worker {
         let thread = thread::spawn(move || loop {
             let job = receiver.lock().unwrap().recv().unwrap();
             job()

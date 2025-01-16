@@ -1,8 +1,5 @@
-mod utils;
-mod run_server;
+use web_framework_rust::bind;
 
 fn main() {
-
-    
-    run_server::run_server();
+    bind();
 }
