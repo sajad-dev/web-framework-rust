@@ -1,4 +1,3 @@
-use std::sync::{Arc, Mutex};
 
 use web_framework_rust::utils::thread_pool;
 

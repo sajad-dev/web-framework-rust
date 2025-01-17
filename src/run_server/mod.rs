@@ -1,5 +1,6 @@
 use std::{
-    io::{ prelude::*, BufReader},
+    env,
+    io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
     thread, time,
 };
@@ -19,10 +20,15 @@ pub fn handel_connection(mut stream: TcpStream) {
     stream.write_all(response.as_bytes()).unwrap();
 }
 
-
 pub fn run_server() {
     let thread_p: ThreadPool = ThreadPool::new(80);
-    let listen = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listen = TcpListener::bind(format!(
+        "{}:{}",
+        env::var("ADDRESS").unwrap(),
+        env::var("PORT").unwrap()
+        
+    ))
+    .unwrap();
 
     log::info!("Run server : 127.0.0.1");
 

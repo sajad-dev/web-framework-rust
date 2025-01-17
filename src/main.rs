@@ -1,11 +1,10 @@
 use web_framework_rust::bind;
 
-#[macro_use]
 extern crate log;
 extern crate simplelog;
 
 use simplelog::*;
-use std::{env, fs::File};
+use std::fs::File;
 
 fn main() {
     CombinedLogger::init(vec![
