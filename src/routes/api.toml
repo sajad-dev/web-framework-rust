@@ -1,0 +1,7 @@
+[[routes]]
+path="/"
+controller=""
+
+[[routes]]
+path="/home"
+controller=""

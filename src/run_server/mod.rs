@@ -15,6 +15,8 @@ pub fn handel_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
     println!("Request: {http_request:#?}");
+
+
     thread::sleep(time::Duration::from_secs(10));
     let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nHi");
     stream.write_all(response.as_bytes()).unwrap();
@@ -26,7 +28,6 @@ pub fn run_server() {
         "{}:{}",
         env::var("ADDRESS").unwrap(),
         env::var("PORT").unwrap()
-        
     ))
     .unwrap();
 

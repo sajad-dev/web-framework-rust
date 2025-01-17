@@ -4,7 +4,7 @@ extern crate log;
 extern crate simplelog;
 
 use simplelog::*;
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 
 fn main() {
     CombinedLogger::init(vec![
@@ -17,8 +17,11 @@ fn main() {
         WriteLogger::new(
             LevelFilter::Info,
             Config::default(),
-            File::create("log/server.log").unwrap(),
-        ),
+            OpenOptions::new()
+                .create(true)      
+                .append(true)      
+                .open("log/server.log")  
+                .unwrap(),        ),
     ])
     .unwrap();
 
