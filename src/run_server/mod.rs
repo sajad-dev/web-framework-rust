@@ -19,9 +19,13 @@ pub fn handel_connection(mut stream: TcpStream) {
     stream.write_all(response.as_bytes()).unwrap();
 }
 
+
 pub fn run_server() {
     let thread_p: ThreadPool = ThreadPool::new(80);
     let listen = TcpListener::bind("127.0.0.1:7878").unwrap();
+
+    log::info!("Run server : 127.0.0.1");
+
     for stream in listen.incoming() {
         thread_p.execute(|| {
             let stream = stream.unwrap();
