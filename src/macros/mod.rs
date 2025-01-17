@@ -13,3 +13,14 @@ macro_rules! exception_log {
         }
     };
 }
+
+#[macro_export]
+macro_rules! create_struct {
+    ($name:ident,$($field:ident: $type:ty),*) => {
+       pub struct $name {
+            $(
+                $field: $type,
+            )*
+        }
+    };
+}

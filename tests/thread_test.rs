@@ -1,5 +1,5 @@
 
-use web_framework_rust::utils::thread_pool;
+use web_framework_rust::core::utils::thread_pool;
 
 #[test]
 fn thread_size_test() {

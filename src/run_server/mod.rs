@@ -5,7 +5,7 @@ use std::{
     thread, time,
 };
 
-use crate::utils::thread_pool::ThreadPool;
+use crate::core::utils::thread_pool::ThreadPool;
 
 pub fn handel_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);

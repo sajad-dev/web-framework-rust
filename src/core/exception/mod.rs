@@ -1,5 +1,7 @@
-use std::{env, panic::Location, time::SystemTime};
+// use std::backtrace::Backtrace;
+use std::{env, panic::Location};
 
+use backtrace::{Backtrace, BacktraceFrame, BacktraceSymbol};
 use chrono::Local;
 use log;
 
@@ -7,13 +9,14 @@ pub trait Exception<T> {
     fn exception_log(self) -> Option<T>;
 }
 
-pub fn err(e: String, location: &Location) {
+pub fn err(e: String, backtrace: BacktraceSymbol) {
     let local = Local::now();
     log::error!(
-        "{} -> file: {} , line: {}, time : {:?}",
+        "{} -> File : {:?}, Line: {:?}, -- {:?} --, time :{}",
         e,
-        location.file(),
-        location.line(),
+        backtrace.filename().unwrap(),
+        backtrace.lineno().unwrap(),
+        backtrace.name().unwrap(),
         local.format("%Y-%m-%d %H:%M:%S").to_string()
     );
     if env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true" {
@@ -29,8 +32,28 @@ where
         match self {
             Ok(value) => Some(value),
             Err(e) => {
-                err(e.to_string(), Location::caller());
+                let backtrace2 = Backtrace::new();
+                let frame = backtrace2.frames().get(1).unwrap();
+                let frame = frame.symbols().get(0).unwrap().clone();
+
+                err(e.to_string(), frame);
                 eprintln!("Error: {:?}", e);
+                None
+            }
+        }
+    }
+}
+
+impl<T> Exception<T> for Option<T> {
+    fn exception_log(self) -> Option<T> {
+        match self {
+            Some(value) => Some(value),
+            None => {
+                let backtrace2 = Backtrace::new();
+                let frame = backtrace2.frames().get(1).unwrap();
+                let frame = frame.symbols().get(0).unwrap().clone();
+
+                err("None Value".to_string(), frame);
                 None
             }
         }
