@@ -1,16 +1,10 @@
 pub mod handel_connection;
 
-use std::{
-    env,
-    net::{TcpListener, TcpStream},
-    thread, time,
-};
+use std::{env, net::TcpListener};
 
 use handel_connection::handel_connection;
 
 use crate::core::utils::thread_pool::ThreadPool;
-
-
 
 pub fn run_server() {
     let thread_p: ThreadPool = ThreadPool::new(80);

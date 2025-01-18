@@ -2,11 +2,16 @@ use crate::core::exception::Exception;
 use serde_derive::Deserialize;
 use std::{collections::HashMap, env, fs};
 
+use super::enums::Method;
+
 #[derive(Debug, Deserialize, Clone)]
 
 pub struct Route {
     pub path: String,
+    pub method: Method,
 }
+
+
 
 pub struct Routes {
     pub api: Vec<Route>,

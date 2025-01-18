@@ -5,7 +5,10 @@ use std::{
     net::TcpStream,
 };
 
-use crate::core::{exception::Exception, router::handel_route::check_route};
+use crate::core::{
+    exception::Exception,
+    router::{enums::Method, handel_route::check_route},
+};
 
 pub fn handel_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
@@ -15,13 +18,15 @@ pub fn handel_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
 
-    let mut  status = http_request[0].splitn(3, " ");
+    let mut status = http_request[0].splitn(3, " ");
 
-    if let (Some(method), Some(route), Some(http_version)) = (status.next(), status.next(), status.next()) {
-        let route= check_route(route.to_string());
+    if let (Some(method), Some(route), Some(http_version)) =
+        (status.next(), status.next(), status.next())
+    {
+        let route = check_route(route.to_string(), Method::get_enum_method(method));
         let http_request = get_req(http_request);
 
-        println!("{}",route.path);
+        println!("{}", route.path);
         let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nHi");
         stream.write_all(response.as_bytes()).unwrap();
     }

@@ -1,4 +1,7 @@
-use super::get_route::{get_one_route, Route};
+use super::{
+    enums::{ErrApi, Method},
+    get_route::{get_one_route, Route},
+};
 
 impl Route {
     pub fn middleware() {}
@@ -6,9 +9,14 @@ impl Route {
     pub fn run() {}
 }
 
-pub fn check_route(path: String) -> Route {
+pub fn check_route(path: String, method: Method) -> Route {
     match get_one_route(path) {
-        Some(value) => value,
-        None => Route { path: "404".to_string() },
+        Some(value) => {
+            if value.method.get_method() != method.get_method() {
+                return ErrApi::Err405.get_err();
+            }
+            value
+        }
+        None => ErrApi::Err404.get_err(),
     }
 }
