@@ -1,7 +1,7 @@
 // use std::backtrace::Backtrace;
-use std::{env, panic::Location};
+use std::env;
 
-use backtrace::{Backtrace, BacktraceFrame, BacktraceSymbol};
+use backtrace::{Backtrace, BacktraceSymbol};
 use chrono::Local;
 use log;
 

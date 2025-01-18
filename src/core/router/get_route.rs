@@ -31,3 +31,12 @@ pub fn get_routes() -> Routes {
 
     Routes { api: key }
 }
+
+pub fn get_one_route(path: String) -> Option<Route> {
+    for route in get_routes().api {
+        if path == route.path {
+            return Some(route);
+        }
+    }
+    return None;
+}
