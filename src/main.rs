@@ -1,8 +1,5 @@
 use web_framework_rust::bind;
 
-extern crate log;
-extern crate simplelog;
-
 use simplelog::*;
 use std::fs::OpenOptions;
 

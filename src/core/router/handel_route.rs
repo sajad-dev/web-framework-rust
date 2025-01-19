@@ -1,3 +1,4 @@
+// use 
 use super::{
     enums::{ErrApi, Method},
     get_route::{get_one_route, Route},
@@ -6,7 +7,13 @@ use super::{
 impl Route {
     pub fn middleware() {}
 
-    pub fn run() {}
+    pub fn controller_fn(&self) {
+        
+    }
+
+    pub fn run(&self) {
+        
+    }
 }
 
 pub fn check_route(path: String, method: Method) -> Route {

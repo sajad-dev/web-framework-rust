@@ -1,3 +1,4 @@
+
 #[macro_export]
 macro_rules! exception_log {
     ($result:expr,$debug:expr) => {

@@ -17,4 +17,7 @@ serde = "1.0.217"
 serde_derive = "1.0.217"
 proc-macro2 = "1.0.93"
 backtrace = "0.3"
-
+meval = "0.2"
+quote = "1.0"
+syn = { version = "2.0", features = ["full"] }
+web_framework_derive = { path = "web_framework_derive" } 

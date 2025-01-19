@@ -19,7 +19,6 @@ impl Method {
             Method::PATCH => "patch".to_string(),
             Method::DELETE => "delete".to_string(),
             Method::PUT => "put".to_string(),
-            _ => "get".to_string(),
         }
     }
     pub fn get_enum_method(method: &str) -> Method {
@@ -49,10 +48,12 @@ impl ErrApi {
             ErrApi::Err404 => Route {
                 path: "/404".to_string(),
                 method: Method::GET,
+                controller:"".to_string()
             },
             _ => Route {
                 path: "/404".to_string(),
                 method: Method::GET,
+                controller:"".to_string()
             },
         }
     }

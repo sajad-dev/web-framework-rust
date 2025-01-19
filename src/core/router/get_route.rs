@@ -9,6 +9,7 @@ use super::enums::Method;
 pub struct Route {
     pub path: String,
     pub method: Method,
+    pub controller:String
 }
 
 
