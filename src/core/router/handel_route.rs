@@ -10,6 +10,7 @@ impl Route {
     pub fn middleware() {}
 
     pub fn controller_fn(&self) -> String {
+        // println!("{:?}",app::controller::controller_fn_hashmap());
         app::controller::controller_fn_hashmap()
             .get(&self.controller)
             .exception_log()
