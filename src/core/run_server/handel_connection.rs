@@ -24,9 +24,10 @@ pub fn handel_connection(mut stream: TcpStream) {
     {
         let route = check_route(route.to_string(), Method::get_enum_method(method));
         let http_request = get_req(http_request);
+        let ou = route.run();
 
         println!("{}", route.path);
-        let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nHi");
+        let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}", ou);
         stream.write_all(response.as_bytes()).unwrap();
     }
 }

@@ -1,4 +1,6 @@
-// use 
+use crate::{app, core::exception::Exception};
+
+// use
 use super::{
     enums::{ErrApi, Method},
     get_route::{get_one_route, Route},
@@ -7,12 +9,17 @@ use super::{
 impl Route {
     pub fn middleware() {}
 
-    pub fn controller_fn(&self) {
-        
+    pub fn controller_fn(&self) -> String {
+        app::controller::controller_fn_hashmap()
+            .get(&self.controller)
+            .exception_log()
+            .unwrap()()
+        // Fix unwarp and falback
+
     }
 
-    pub fn run(&self) {
-        
+    pub fn run(&self) -> String {
+        self.controller_fn()
     }
 }
 

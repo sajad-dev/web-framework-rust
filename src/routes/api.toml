@@ -1,9 +1,9 @@
 [[api]]
 path="/"
-method="get"
-controller="HomeController"
+method="GET"
+controller="home"
 
 [[api]]
 path="/home"
-path="post"
-controller=""
+method="POST"
+controller="home"

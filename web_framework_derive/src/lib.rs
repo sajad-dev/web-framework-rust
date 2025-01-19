@@ -8,12 +8,21 @@ pub fn controller_fn(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let input = parse_macro_input!(item as ItemFn);
     let func_name = &input.sig.ident;
 
+    let mut attr_iter = _attr.into_iter();
+
+    let mut name = String::from(stringify!(#func_name));
+
+    if let Some(proc_macro::TokenTree::Literal(lit)) = attr_iter.next() {
+        name = lit.to_string()
+    }
+
     let gen = quote! {
         use std::collections::HashMap;
 
-        pub fn controller_fn_list() -> HashMap<String, fn()> {
-            let mut map: HashMap<String, fn()> = HashMap::new();
-            map.insert(String::from(stringify!(#func_name)), #func_name as fn());
+        type fn_type = fn() -> String;
+        pub fn controller_fn_hashmap() -> HashMap<String, fn_type> {
+            let mut map: HashMap<String, fn_type> = HashMap::new();
+            map.insert(#name.trim_matches('"').to_string(), #func_name as fn_type);
             map
         }
 
