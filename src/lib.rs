@@ -3,5 +3,5 @@ pub mod core;
 pub mod macros;
 
 pub fn bind() {
-    core::run_server::run_server();
+    core::http::run_server();
 }

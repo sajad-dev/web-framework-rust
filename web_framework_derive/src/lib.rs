@@ -19,7 +19,7 @@ pub fn controller_fn(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let gen = quote! {
         use std::collections::HashMap;
 
-        type fn_type = fn() -> String;
+        type fn_type = fn(http_request:HashMap<String, String>) -> String;
         pub fn controller_fn_hashmap() -> HashMap<String, fn_type> {
             let mut map: HashMap<String, fn_type> = HashMap::new();
             map.insert(#name.trim_matches('"').to_string(), #func_name as fn_type);

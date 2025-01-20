@@ -23,11 +23,11 @@ pub fn handel_connection(mut stream: TcpStream) {
         (status.next(), status.next(), status.next())
     {
         let route = check_route(route.to_string(), Method::get_enum_method(method));
-        let http_request = get_req(http_request);
-        let ou = route.run();
+        let http_request = get_req(http_request.clone());
+        route.run(stream.try_clone().unwrap(),http_request,http_version.to_string());
 
-        let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}", ou);
-        stream.write_all(response.as_bytes()).unwrap();
+        // let response = format!("HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}", ou);
+        // stream.write_all(response.as_bytes()).unwrap();
     }
 }
 

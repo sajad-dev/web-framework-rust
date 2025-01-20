@@ -1,4 +1,12 @@
-use crate::{app, core::exception::Exception};
+use std::{collections::HashMap, io::Write, net::TcpStream};
+
+use crate::{
+    app,
+    core::{
+        exception::Exception,
+        utils::response::{self, response, Status},
+    },
+};
 
 // use
 use super::{
@@ -9,18 +17,23 @@ use super::{
 impl Route {
     pub fn middleware() {}
 
-    pub fn controller_fn(&self) -> String {
-        // println!("{:?}",app::controller::controller_fn_hashmap());
+    pub fn controller_fn(&self,http_request:HashMap<String, String>) -> String {
         app::controller::controller_fn_hashmap()
             .get(&self.controller)
             .exception_log()
-            .unwrap()()
-        // Fix unwarp and falback
-
+            .unwrap()(http_request)
     }
 
-    pub fn run(&self) -> String {
-        self.controller_fn()
+    pub fn run(
+        &self,
+        mut stream: TcpStream,
+        http_request: HashMap<String, String>,
+        _http_version: String,
+    ) {
+        let content = self.controller_fn(http_request);
+        let res = response(Status::OK, "application/json", &content, HashMap::new());
+        
+        stream.write_all(res.as_bytes()).unwrap();
     }
 }
 
