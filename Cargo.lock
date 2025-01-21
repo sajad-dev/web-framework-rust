@@ -1595,6 +1595,7 @@ name = "web_framework_derive"
 version = "0.1.0"
 dependencies = [
  "log",
+ "proc-macro2",
  "quote",
  "syn 2.0.96",
 ]

@@ -1,14 +1,10 @@
 use std::{collections::HashMap, io::Write, net::TcpStream};
 
+
 use crate::{
-    app,
-    core::{
-        exception::Exception,
-        utils::response::{self, response, Status},
-    },
+    core::utils::response::{ response, Status}, routes::provider,
 };
 
-// use
 use super::{
     enums::{ErrApi, Method},
     get_route::{get_one_route, Route},
@@ -17,11 +13,8 @@ use super::{
 impl Route {
     pub fn middleware() {}
 
-    pub fn controller_fn(&self,http_request:HashMap<String, String>) -> String {
-        app::controller::controller_fn_hashmap()
-            .get(&self.controller)
-            .exception_log()
-            .unwrap()(http_request)
+    pub fn controller_fn(&self, http_request: HashMap<String, String>) -> String {
+        provider(&self.controller)(http_request)
     }
 
     pub fn run(
@@ -32,7 +25,7 @@ impl Route {
     ) {
         let content = self.controller_fn(http_request);
         let res = response(Status::OK, "application/json", &content, HashMap::new());
-        
+
         stream.write_all(res.as_bytes()).unwrap();
     }
 }

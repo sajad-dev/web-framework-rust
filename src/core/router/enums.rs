@@ -48,12 +48,12 @@ impl ErrApi {
             ErrApi::Err404 => Route {
                 path: "/404".to_string(),
                 method: Method::GET,
-                controller:"".to_string()
+                controller:"err".to_string()
             },
             _ => Route {
                 path: "/404".to_string(),
                 method: Method::GET,
-                controller:"".to_string()
+                controller:"err".to_string()
             },
         }
     }

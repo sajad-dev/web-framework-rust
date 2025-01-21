@@ -1,10 +1,10 @@
-use web_framework_derive::controller_fn;
+use std::collections::HashMap;
 
-pub fn err() -> String {
-    String::new()
+pub fn err(_http_request: HashMap<String, String>) -> String {
+    String::from("lk")
 }
 
-#[controller_fn("home")]
-pub fn home_controller(http_request:HashMap<String, String>) -> String {
-    return String::from("gf");
+
+pub fn home_controller (_http_request: HashMap<String, String>) -> String{
+    String::from("jf")
 }
